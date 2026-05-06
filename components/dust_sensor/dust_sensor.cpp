@@ -72,7 +72,7 @@ float DustSensor::sample_once() {
     }
 
     const float v_volts = static_cast<float>(*maybe_mv) / 1000.0f;
-    filter_buf_[filter_idx_++ % kFilterLen] = voltage_to_mgm3(v_volts);
+    filter_buf_[filter_idx_++ % kFilterLen] = voltage_to_ugm3(v_volts);
 
     const float sum = std::reduce(filter_buf_.begin(), filter_buf_.end());
     return sum / static_cast<float>(kFilterLen);

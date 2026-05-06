@@ -11,8 +11,8 @@ enum class FanMode : uint8_t { Off = 0, Auto = 1, ManualHigh = 2 };
 
 struct AppConfig {
     FanMode mode           = FanMode::Auto;
-    float   threshold_high = 0.05f;  // mg/m³ — fan turns ON above this
-    float   threshold_low  = 0.02f;  // mg/m³ — fan turns OFF below this
+    float   threshold_high = 50.0f;  // µg/m³ — fan turns ON above this
+    float   threshold_low  = 20.0f;  // µg/m³ — fan turns OFF below this
 };
 
 class NvsConfig {

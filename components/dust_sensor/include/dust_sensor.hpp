@@ -31,12 +31,12 @@ private:
     float sample_once();
 
     // Sharp GP2Y1010AU0F datasheet conversion:
-    //   Voc = 0.9 V (no dust), sensitivity = 0.5 V per mg/m³
-    //   density = (voltage - 0.9) / 0.5   [mg/m³]
-    static constexpr float voltage_to_mgm3(float v_volts) {
-        constexpr float kVoc  = 0.9f;
-        constexpr float kSens = 0.5f;
-        const float density = (v_volts - kVoc) / kSens;
+    //   Voc = 0.9 V (no dust), sensitivity = 0.5 mV per µg/m³
+    //   density [µg/m³] = (voltage - 0.9) / 0.0005
+    static constexpr float voltage_to_ugm3(float v_volts) {
+        constexpr float kVoc      = 0.9f;
+        constexpr float kSens_vpu = 0.0005f;  // V per µg/m³
+        const float density = (v_volts - kVoc) / kSens_vpu;
         return density > 0.0f ? density : 0.0f;
     }
 

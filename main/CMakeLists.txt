@@ -5,7 +5,7 @@ idf_component_register(
         dust_sensor
         rf_remote
         fan_control
-        display
+        led_ring
         nvs_config
         esp_wifi
         esp_https_ota

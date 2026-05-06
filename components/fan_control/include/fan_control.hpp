@@ -7,12 +7,12 @@
 #include "freertos/queue.h"
 #include "driver/gpio.h"
 
-#include "task.hpp"   // espp::Task
-#include "logger.hpp" // espp::Logger
+#include "task.hpp"    // espp::Task
+#include "logger.hpp"  // espp::Logger
 
-#include "nvs_config.hpp" // FanMode
-#include "display.hpp"    // DisplayState
-#include "rf_remote.hpp"  // RfCommand
+#include "nvs_config.hpp"  // FanMode
+#include "led_ring.hpp"    // SystemState
+#include "rf_remote.hpp"   // RfCommand
 
 class FanControl {
 public:
@@ -20,9 +20,9 @@ public:
         int            gpio_ssr;
         QueueHandle_t  dust_q;
         QueueHandle_t  mode_cmd_q;
-        DisplayState  *display_state;
-        float          threshold_high;
-        float          threshold_low;
+        SystemState   *system_state;
+        float          threshold_high;  // µg/m³
+        float          threshold_low;   // µg/m³
         FanMode        initial_mode;
     };
 
@@ -41,6 +41,7 @@ private:
 
     bool    fan_on_{false};
     FanMode mode_;
+    FanMode previous_mode_{FanMode::Auto};  // restored when Button B lifts from OFF
 
     using Clock     = std::chrono::steady_clock;
     using TimePoint = Clock::time_point;
