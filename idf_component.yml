@@ -1,0 +1,5 @@
+dependencies:
+  esp-cpp/espp:
+    version: ">=0.3.0"
+  espressif/esp_lcd_ssd1306:
+    version: ">=1.0.0"

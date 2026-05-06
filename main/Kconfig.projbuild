@@ -1,0 +1,21 @@
+menu "ESPurifier Configuration"
+
+    config WIFI_SSID
+        string "WiFi SSID"
+        default "myssid"
+        help
+            SSID of the WiFi network used for OTA updates.
+
+    config WIFI_PASSWORD
+        string "WiFi Password"
+        default "mypassword"
+        help
+            Password for the WiFi network.
+
+    config OTA_URL
+        string "OTA firmware URL"
+        default "http://192.168.1.100/ESPurifier.bin"
+        help
+            HTTP(S) URL from which firmware updates are fetched.
+
+endmenu
