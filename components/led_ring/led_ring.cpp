@@ -83,6 +83,13 @@ bool LedRing::task_fn(std::mutex &, std::condition_variable &) {
 // ─── Zone A: LED 0 — mode indicator ──────────────────────────────────────────
 
 void LedRing::update_zone_a(FanMode mode) {
+    // Clog alert overrides mode indicator: rapid orange flash
+    if (cfg_.state->clog_detected.load()) {
+        const bool on = (clog_flash_tick_++ % kClogFlashPeriod) < (kClogFlashPeriod / 2);
+        led_strip_set_pixel(strip_, 0, on ? 255 : 0, on ? 80 : 0, 0);
+        return;
+    }
+
     switch (mode) {
         case FanMode::Off:
             // Solid Red

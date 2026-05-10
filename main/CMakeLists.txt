@@ -7,6 +7,7 @@ idf_component_register(
         fan_control
         led_ring
         nvs_config
+        pressure_sensor
         esp_wifi
         esp_https_ota
         nvs_flash

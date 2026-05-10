@@ -16,6 +16,7 @@ struct SystemState {
     std::atomic<float>    dust_ugm3{0.0f};
     std::atomic<FanMode>  mode{FanMode::Auto};
     std::atomic<bool>     fan_on{false};
+    std::atomic<bool>     clog_detected{false};
 };
 
 class LedRing {
@@ -51,6 +52,10 @@ private:
     // Flashing state (Zone B at hazardous level)
     uint32_t flash_tick_{0};
     static constexpr uint32_t kFlashPeriod = 10;  // ticks; 5 on / 5 off = 500 ms cycle
+
+    // Clog alert flash state (Zone A rapid orange)
+    uint32_t clog_flash_tick_{0};
+    static constexpr uint32_t kClogFlashPeriod = 6;  // ticks; 3 on / 3 off = 150 ms period
 
     // Task tick period in milliseconds
     static constexpr uint32_t kTickMs = 50;

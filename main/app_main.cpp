@@ -8,6 +8,7 @@
 #include "rf_remote.hpp"
 #include "fan_control.hpp"
 #include "led_ring.hpp"
+#include "pressure_sensor.hpp"
 
 extern "C" void app_main() {
     // NVS must be initialised before any espp::Nvs usage
@@ -58,11 +59,21 @@ extern "C" void app_main() {
         .state     = &system_state,
     }};
 
+    // GPIO 8 (SDA) and 9 (SCL) freed up after OLED was replaced by LED ring
+    PressureSensor pressure{{
+        .gpio_sda         = 8,
+        .gpio_scl         = 9,
+        .i2c_addr         = 0x77,
+        .system_state     = &system_state,
+        .clog_threshold_pa = cfg.clog_threshold_pa,
+    }};
+
     // Start all tasks
     dust.start();
     rf.start();
     fan.start();
     leds.start();
+    pressure.start();
 
     // Register app_main with the task watchdog
     ESP_ERROR_CHECK(esp_task_wdt_add(nullptr));
